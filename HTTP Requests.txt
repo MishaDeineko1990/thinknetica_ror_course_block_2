@@ -1,0 +1,119 @@
+### Get
+
+ncat -C [httpbin.org](http://httpbin.org/) 80
+GET [http://http/anything](http://httpbin.org/anything) HTTP/1.1
+Host: httpbin[.org](http://httpbin.org/anything)
+
+HTTP/1.1 200 OK
+Date: Fri, 31 Mar 2023 20:22:31 GMT
+Content-Type: application/json
+Content-Length: 272
+Connection: keep-alive
+Server: gunicorn/19.9.0
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+
+{
+"args": {},
+"data": "",
+"files": {},
+"form": {},
+"headers": {
+"Host": "http",
+"X-Amzn-Trace-Id": "Root=1-64274107-77b514733b0fda7651a05c6f"
+},
+"json": null,
+"method": "GET",
+"origin": "46.211.80.155",
+"url": "[http://http/anything](http://http/anything)"
+}
+---------------------------------------------------------------------------------------------------------
+
+### GET request with any URL string parameters
+
+ncat -C [httpbin.org](http://httpbin.org/) 80
+GET [http://http/anything](http://httpbin.org/anything)?param1=value1&param2=value2 HTTP/1.1
+Host: httpbin[.org](http://httpbin.org/anything)
+
+
+
+HTTP/1.1 200 OK
+Date: Fri, 31 Mar 2023 20:24:11 GMT
+Content-Type: application/json
+Content-Length: 351
+Connection: keep-alive
+Server: gunicorn/19.9.0
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+
+{
+"args": {
+"param1": "value1",
+"param2": "value2"
+},
+"data": "",
+"files": {},
+"form": {},
+"headers": {
+"Host": "http",
+"X-Amzn-Trace-Id": "Root=1-6427416b-2da8f54228ccec17652f7ade"
+},
+"json": null,
+"method": "GET",
+"origin": "46.211.80.155",
+"url": "[http://http/anything?param1=value1&param2=value2](http://http/anything?param1=value1&param2=value2)"
+}
+
+-------------------------------------------------------------------------------------------------------------
+
+### Post
+
+ncat -C [httpbin.org](http://httpbin.org/) 80
+POST [http://http/anything](http://httpbin.org/anything) HTTP/1.1
+Host: httpbin[.org](http://httpbin.org/anything)
+Content-Leangth: 26
+
+login=admin&password=12345
+
+HTTP/1.1 400 Bad Request
+Date: Fri, 31 Mar 2023 21:00:08 GMT
+Content-Type: text/html
+Content-Length: 189
+Connection: keep-alive
+
+<html>
+<head>
+<title>Bad Request</title>
+</head>
+<body>
+<h1><p>Bad Request</p></h1>
+Invalid HTTP header name: 'LOGIN=ADMIN&PASSWORD=12345'
+</body>
+</html>
+
+printf 'POST [http://http/anything](http://httpbin.org/anything) HTTP/1.1\r\nHost: httpbin[.org](http://httpbin.org/anything)\r\nContent-Length: 26\r\n\r\nlogin=admin&password=12345' | ncat -C [httpbin.org](http://httpbin.org/) 80
+
+----------------------------------------------------------------------------------------------------------------------------
+
+1. Создание:
+  - POST
+2. Получение:
+  - GET
+3. Обновление:
+  - PUT
+  - PATCH
+4. Удаление:
+  - DELETE
+5. Определение возможностей сервера:
+  - OPTIONS
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Объяснение заголовков:
+
+- Accept: указывает форматы ответов, которые клиент может обрабатывать.
+- Connection: указывает, как должно быть установлено соединение между клиентом и сервером (например, "keep-alive" для сохранения соединения).
+- Content-Type: указывает тип данных, содержащихся в теле запроса или ответа.
+- User-Agent: идентифицирует клиентский софт, который отправил запрос.
+- Content-Length: указывает размер данных, содержащихся в теле запроса или ответа.
+- Cache-Control: указывает действия, которые можно выполнить над кэшированными данными и определяет параметры кэширования (например, "no-cache" для предотвращения кэширования ответа).
